@@ -16,12 +16,14 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.control;
 
+import android.content.Context;
+
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.exception.ExpenseManagerException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.AccountDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.TransactionDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
@@ -36,6 +38,9 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 public abstract class ExpenseManager implements Serializable {
     private AccountDAO accountsHolder;
     private TransactionDAO transactionsHolder;
+
+    public ExpenseManager(Context context) {
+    }
 
     /***
      * Get list of account numbers as String.
@@ -66,7 +71,7 @@ public abstract class ExpenseManager implements Serializable {
         if (!amount.isEmpty()) {
             double amountVal = Double.parseDouble(amount);
             transactionsHolder.logTransaction(transactionDate, accountNo, expenseType, amountVal);
-            accountsHolder.updateBalance(accountNo, expenseType, amountVal);
+            accountsHolder.balanceUpdating(accountNo, expenseType, amountVal);
         }
     }
 
@@ -75,7 +80,7 @@ public abstract class ExpenseManager implements Serializable {
      *
      * @return
      */
-    public List<Transaction> getTransactionLogs() {
+    public List<Transaction> getTransactionLogs() throws ParseException {
         return transactionsHolder.getPaginatedTransactionLogs(10);
     }
 
@@ -89,7 +94,7 @@ public abstract class ExpenseManager implements Serializable {
      */
     public void addAccount(String accountNo, String bankName, String accountHolderName, double initialBalance) {
         Account account = new Account(accountNo, bankName, accountHolderName, initialBalance);
-        accountsHolder.addAccount(account);
+        accountsHolder.accountAdding(account);
     }
 
     /***
@@ -132,5 +137,7 @@ public abstract class ExpenseManager implements Serializable {
      * This method should be implemented by the concrete implementation of this class. It will dictate how the DAO
      * objects will be initialized.
      */
-    public abstract void setup() throws ExpenseManagerException;
+    //public abstract void setup() throws ExpenseManagerException;
+
+    public abstract void setup(Context context);
 }

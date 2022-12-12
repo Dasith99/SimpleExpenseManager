@@ -56,7 +56,7 @@ public interface AccountDAO {
      *
      * @param account - the account to be added.
      */
-    public void addAccount(Account account);
+    public void accountAdding(Account account);
 
     /***
      * Remove an account from the accounts collection.
@@ -78,6 +78,6 @@ public interface AccountDAO {
      * @param amount      - amount involved
      * @throws InvalidAccountException - if the account number is invalid
      */
-    public void updateBalance(String accountNo, ExpenseType expenseType, double amount) throws InvalidAccountException;
+    public void balanceUpdating(String accountNo, ExpenseType expenseType, double amount) throws InvalidAccountException;
 
 }
