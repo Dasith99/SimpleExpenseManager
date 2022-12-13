@@ -38,19 +38,22 @@ public class SQLiteDBhelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE "+ACCOUNT_TBL+"("+
+        String query_1=("CREATE TABLE "+ACCOUNT_TBL+"("+
                 ACCOUNT_NUMBER+ " TEXT PRIMARY KEY, " +
                 NAME_OF_BANK + " TEXT NOT NULL, " +
                 NAME_OF_HOLDER + " TEXT NOT NULL, " +
                 BANK_BALANCE + " REAL NOT NULL)");
+        sqLiteDatabase.execSQL(query_1);
 
-        sqLiteDatabase.execSQL("CREATE TABLE " + TRANSACTION_TBL + "(" +
+        String query_2=("CREATE TABLE " + TRANSACTION_TBL + "(" +
                 TRN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 DATE_OF_TRN + " TEXT NOT NULL, " +
                 TYPE_OF_EXPENSE + " TEXT NOT NULL, " +
                 AMOUNT + " REAL NOT NULL, " +
                 ACCOUNT_NUMBER + " TEXT," +
                 "FOREIGN KEY (" + ACCOUNT_NUMBER + ") REFERENCES " + TRANSACTION_TBL + "(" + ACCOUNT_NUMBER + "))");
+        sqLiteDatabase.execSQL(query_2);
+
     }
 
     @Override

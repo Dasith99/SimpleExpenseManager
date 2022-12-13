@@ -42,7 +42,7 @@ public class PersistentTransactionDAO implements TransactionDAO {
         values.put(TYPE_OF_EXPENSE, String.valueOf(expenseType));
         values.put(AMOUNT, amount);
 
-        // insert row
+
         d_b.insert(TRANSACTION_TBL, null, values);
         d_b.close();
     }
